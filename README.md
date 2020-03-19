@@ -361,6 +361,40 @@ iptables-save > /etc/iptables.rules
 ```
 sudo chmod a+x /etc/network/if-post-down.d/iptables
 ```
+## 七.修改网关，指向主路由（使用root用户登录）
+打开文档，修改网关
 ```
-sudo systemctl start clash.service
+nano /etc/network/interfaces
+```
+根据实际情况修改
+```
+auto lo
+auto eth0                      #eth0为网卡，根据实际情况修改    
+iface lo inet loopback
+iface eth0 inet static         #static为静态，dhcp为动态
+address 10.10.10.97            #本机IP
+netmask 255.255.255.0          #子网掩码
+gateway 10.10.10.98            #网关,主路由IP地址
+dns-nameservers 223.6.6.6.     #这里根据实际情况，填写本地运营商最友好的DNS
+mtu 1492                       #MTU
+mss 1452                       #MSS
+```
+重启网卡服务
+```
+/etc/init.d/networking restart
+```
+重启系统
+```
+reboot
+```
+
+以上，LINUX下的Clash已经可以正常运行
+# Enjoy!
+
+# PS:需要通过Clash科学上网的设备，可以使用以下两种方式进行配置
+## 1.手动修改设备的网关跟DNS
+## 2.通过主路由DHCP分配，推荐
+```
+网关：10.10.10.97     #旁路由IP
+DNS：198.18.0.1       #Fake-ip（详情可以自行搜索关于Clashde的Fake-ip模式相关的文章）
 ```
