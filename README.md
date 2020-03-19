@@ -1,6 +1,18 @@
 # Clash-Linux-折腾笔记
 #### 在这里记录下自己在LINUX下折腾Clash的基本过程和踩过得坑。本人并没有正规学过LINUX，以下内容为本人全部是在网络上面搜集的教程和TG各大佬的指导，然后整合，反复折腾出来的，亲测可用，如果有写的不对的地方，大佬别笑。。。
-
+##### 坦白说Clash是我用过的旁路由科学上网插件中最好用的一款（仅限本人），从Windows下的Clash for Windows到Koolshare Lede的KoolClash再到Openwrt的OpenClash,我都有深入使用过，下面是这三款软件的介绍和我的使用感受
+Clash for Windows
+```
+Clash for Windows最大的特点就是简单易用，传说中的即插即用。可惜只支持Windows设备，多设备想同时享受代理的话似乎比较麻烦，这是我没接触软路由前使用的软件。但由于手头的设备比较多，所以产生了玩软路由的念头，于是有了使用下面两款软件的机会
+```
+KoolClash
+```
+KoolClash是苏大开发的一款基于Koolshare Lede系统下的一款Clash内核的科学上网插件。在刚接触软路由的时候，受油管各大UP主的影响，本人使用的就是物理机装LEDE做主路由的方案，所以KoolClash也成了我科学上网的首选。但是在我使用LEDE作为单路由的时候，KoolClash才刚刚更新支持Fake-ip,加上本人知识有限，所有在配置方面遇到诸多问题，一直不能完美的运行。所有才有了后面的主路由加旁路网关的方案。
+```
+OpenClash
+```
+OpenClash是运行在OpenWrt系统上的一款插件，其实Koolshare Lede也可以装（毕竟LEDE也是Openwrt中的一个分支）。至于为什么用OpenWrt而不再使用Koolshare Lede，一方面是受油管各UP主的洗脑，另一方面是因为我是一个追新的人，Koolshare Lede都好久没更新了，感觉已经被他们的团队放弃了。而OpenClash给我的使用感受就是，界面直接，
+```
 ## 系统：Debian 10.3 （其他任何Linux系统都可以，或者更好）
 官网下载的ISO镜像，Proxmox新建虚拟机安装，安装过程就不累述了，网上大把教程。新建一个普通用户，以下用本人惯用的yuanlam为例
 
