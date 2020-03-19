@@ -8,7 +8,14 @@ Clash for Windows最大的特点就是简单易用，传说中的即插即用。
 KoolClash是苏大开发的一款基于Koolshare Lede系统下的一款Clash内核的科学上网插件。在刚接触软路由的时候，受油管各大UP主的影响，本人使用的就是物理机装LEDE做主路由的方案，所以KoolClash也成了我科学上网的首选。但是在我使用LEDE作为单路由的时候，KoolClash才刚刚更新支持Fake-ip,加上本人知识有限，所有在配置方面遇到诸多问题，一直不能完美的运行。所有才有了后面的主路由加旁路网关的方案。
 
 ### OpenClash
-OpenClash是运行在OpenWrt系统上的一款插件，其实Koolshare Lede也可以装（毕竟LEDE也是Openwrt中的一个分支）。至于为什么用OpenWrt而不再使用Koolshare Lede，一方面是受油管各UP主的洗脑，另一方面是因为我是一个追新的人，Koolshare Lede都好久没更新了，感觉已经被他们的团队放弃了。而当我使用OpenWrt的时候，已经是使用主路由加旁路网关的方案，所以在使用OpenClash上是相对比较顺利的（也许就像苏大说的那样，Fake-ip更适合作为旁路网关使用吧）
+OpenClash是运行在OpenWrt系统上的一款插件，其实Koolshare Lede也可以装（毕竟LEDE也是Openwrt中的一个分支）。至于为什么用OpenWrt而不再使用Koolshare Lede，一方面是受油管各UP主的洗脑，另一方面是因为我是一个追新的人，Koolshare Lede都好久没更新了，感觉已经被他们的团队放弃了。而当我使用OpenWrt的时候，已经是使用主路由加旁路网关的方案，所以在使用OpenClash上是相对比较顺利的（也许就像苏大说的那样，Fake-ip更适合作为旁路网关使用吧）。所以主路由加旁路openclash算是一个比较稳定跟简单的方案，基本已经不需要再折腾了。
+
+### Clash for Linux
+至于为什么最终使用Linux下的Clash替代OpenClash，完全是因为本人水平有限，又习惯折腾。自己编译出来的Openwrt固件问题不断，用各位大佬编译好的又有些设置我不能理解，功能也有90%我用不上，所以才选择这种方案。幸好，至今还算稳定，机场线路也很给面子，所以我还是比例倾向于这种的。
+
+
+##废话不多说，下面正式开始
+
 
 ## 系统：Debian 10.3 （其他任何Linux系统都可以，或者更好）
 官网下载的ISO镜像，Proxmox新建虚拟机安装，安装过程就不累述了，网上大把教程。新建一个普通用户，以下用本人惯用的yuanlam为例
