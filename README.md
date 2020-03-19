@@ -35,7 +35,7 @@ reboot
 ```
 
 ## 二.系统调优（root用户，此步骤可做可不做）
-#### ~~所有东西都是参照网上修改的，酒精有没有效我也不知道~~
+#### ~~所有东西都是参照网上修改的，究竟有没有效我也不知道~~
 #### 1.升级
 ```
 apt update && apt -y upgrade
@@ -231,4 +231,55 @@ unzip gh-pages.zip
 #### 7.把目录名改成 dashboard
 ```
 mv yacd-gh-pages/ dashboard/
+```
+## 五.利用systemd，设置clash开机自启动（使用yuanlam用户登录）
+#### 1.创建service文件
+```
+sudo touch /etc/systemd/system/clash.service
+```
+#### 2.编辑service文件
+打开service文件
+```
+sudo touch /etc/systemd/system/clash.service
+```
+填入以下内容
+```
+[Unit]
+Description=clash daemon
+
+[Service]
+Type=simple
+User=yuanlam
+ExecStart=/usr/bin/clash -d /home/yuanlam/.config/clash/
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+```
+保存并退出
+#### 3.重新加载 systemd 模块
+```
+sudo systemctl daemon-reload
+```
+#### 4.启动Clash
+```
+sudo systemctl start clash.service
+```
+#### 5.设置Clash开机自启动
+```
+sudo systemctl enable clash.service
+```
+#### 以下为Clash相关的管理命令
+```
+## 启动Clash ##
+sudo systemctl start clash.service
+
+## 重启Clash ##
+sudo systemctl restart clash.service
+
+## 查看Clash运行状态 ##
+sudo systemctl status clash.service
+
+## 实时滚动状态 ##
+sudo journalctl -u clash.service -f
 ```
