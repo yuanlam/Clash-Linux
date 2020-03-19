@@ -76,5 +76,54 @@ sysctl net.ipv4.tcp_available_congestion_control
 ```
 sysctl net.ipv4.tcp_congestion_control
 ```
+###### 4.优化系统参数
+打开配置文件
+```
+sudo nano /etc/sysctl.conf
+```
+最下填入以下参数
+```
+#开启流量转发
+**此处是重点，后面那些可以不改，这里必须改，开启了转发，后面的动作才有意义**
+net.ipv4.ip_forward=1
 
+#增大打开文件数限制
+fs.file-max = 999999
+
+#增大所有类型数据包的缓冲区大小（通用设置，其中default值会被下方具体类型包的设置覆盖）
+#最大缓冲区大小为64M，初始大小64K。下同
+#此大小适用于一般的使用场景。如果场景偏向于传输大数据包，则可以按倍数扩大该值，去匹配单个包大小
+net.core.rmem_max = 67108864
+net.core.wmem_max = 67108864
+net.core.rmem_default = 6291456
+net.core.wmem_default = 6291456
+net.core.netdev_max_backlog = 65535
+net.core.somaxconn = 262114
+
+#增大TCP数据包的缓冲区大小，并优化连接保持
+net.ipv4.tcp_tw_reuse = 1
+net.ipv4.tcp_fin_timeout = 30
+net.ipv4.tcp_keepalive_time = 1200
+net.ipv4.tcp_max_syn_backlog = 8192
+net.ipv4.tcp_max_tw_buckets = 5000
+net.ipv4.tcp_mem = 8192 131072 67108864
+net.ipv4.tcp_rmem = 10240 87380 12582912
+net.ipv4.tcp_wmem = 10240 87380 12582912
+net.ipv4.tcp_mtu_probing = 1
+net.ipv4.tcp_notsent_lowat = 16384
+net.ipv4.tcp_syncookies = 1
+net.ipv4.tcp_max_orphans= 262114
+net.ipv4.tcp_fastopen = 3
+
+net.ipv4.ip_local_port_range = 1024 65000
+
+#增大UDP数据包的缓冲区大小
+net.ipv4.udp_mem = 8192 131072 67108864
+net.ipv4.udp_rmem_min = 4096
+net.ipv4.udp_wmem_min = 4096
+```
+保存退出，输入命令使修改生效
+```
+sysctl --system
+```
 
