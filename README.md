@@ -12,7 +12,7 @@
 ```
 nano /etc/network/interfaces       
 ```
-###### 2.参照以下内容根据实际情况修改：
+#### 2.参照以下内容根据实际情况修改：
 ```
 auto lo
 auto eth0                      #eth0为网卡，根据实际情况修改    
@@ -25,28 +25,28 @@ dns-nameservers 198.18.0.1     #DNS，我的科学上网方式是openwrt旁路�
 mtu 1492                       #MTU
 mss 1452                       #MSS
 ```
-###### 3.重启网络
+#### 3.重启网络
 ```
 /etc/init.d/networking restart
 ```
-###### 4.重启系统
+#### 4.重启系统
 ```
 reboot
 ```
 
 ## 二.系统调优（root用户，此步骤可做可不做）
 #### ~~所有东西都是参照网上修改的，酒精有没有效我也不知道~~
-###### 1.升级
+#### 1.升级
 ```
 apt update && apt -y upgrade
 ```
-###### 2.安装必要组件
+#### 2.安装必要组件
 ```
 apt -y install net-tools curl vim zip unzip yum supervisor wget nano gnupg gnupg2 gnupg1
 apt -y install sudo
 sudo apt-get install libcap2-bin
 ```
-###### 3.切换内核，开启BBR
+#### 3.切换内核，开启BBR
 
 添加源
 ```
@@ -76,7 +76,7 @@ sysctl net.ipv4.tcp_available_congestion_control
 ```
 sysctl net.ipv4.tcp_congestion_control
 ```
-###### 4.优化系统参数
+#### 4.优化系统参数
 打开配置文件
 ```
 sudo nano /etc/sysctl.conf
@@ -126,7 +126,7 @@ net.ipv4.udp_wmem_min = 4096
 ```
 sysctl --system
 ```
-###### 5.永久关闭ipv6
+#### 5.永久关闭ipv6
 一次输入命令
 ```
 echo " ">>/etc/sysctl.conf
@@ -153,7 +153,7 @@ AddressFamily inet
 service sshd restart
 netstat -anptl
 ```
-###### 6.取消53端口被占用的情况
+#### 6.取消53端口被占用的情况
 *其实这里可以不做，只要Clash的DNS监听端口不适用53就可以了*
 进入文件
 ```
@@ -164,7 +164,7 @@ sudo nano /etc/systemd/resolved.conf
 DNSStubListener=no
 ```
 保存退出
-###### 7.创建非root用户，用于安装运行Clash
+#### 7.创建非root用户，用于安装运行Clash
 创建新用户
 *此处如果是用IOS镜像安装，可以跳过*
 ```
