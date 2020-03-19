@@ -126,4 +126,41 @@ net.ipv4.udp_wmem_min = 4096
 ```
 sysctl --system
 ```
-
+###### 5.永久关闭ipv6
+一次输入命令
+```
+echo " ">>/etc/sysctl.conf
+echo "# made for disabled IPv6 in $(date +%F)">>/etc/sysctl.conf
+echo 'net.ipv6.conf.all.disable_ipv6 = 1'>>/etc/sysctl.conf
+echo 'net.ipv6.conf.default.disable_ipv6 = 1'>>/etc/sysctl.conf
+echo 'net.ipv6.conf.lo.disable_ipv6 = 1'>>/etc/sysctl.conf
+tail -5 /etc/sysctl.conf
+sysctl -p
+netstat -anptl
+```
+修改ssh配置，只监听IPv4地址
+打开文档
+```
+nano /etc/ssh/sshd_config
+```
+文件末尾添加以下参数，也可直接文档取消注释
+```
+ListenAddress 0.0.0.0
+AddressFamily inet
+```
+重启服务
+```
+service sshd restart
+netstat -anptl
+```
+###### 6.取消53端口被占用的情况
+*其实这里可以不做，只要Clash的DNS监听端口不适用53就可以了*
+进入文件
+```
+sudo nano /etc/systemd/resolved.conf
+```
+取消注释，修改yes为no
+```
+DNSStubListener=no
+```
+保存退出
