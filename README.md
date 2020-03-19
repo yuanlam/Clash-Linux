@@ -127,7 +127,7 @@ net.ipv4.udp_wmem_min = 4096
 sysctl --system
 ```
 #### 5.永久关闭ipv6
-一次输入命令
+依次输入命令
 ```
 echo " ">>/etc/sysctl.conf
 echo "# made for disabled IPv6 in $(date +%F)">>/etc/sysctl.conf
@@ -177,4 +177,58 @@ usermod -aG sudo yuanlam
 重启系统
 ```
 reboot
+```
+## 三.安装Clash（使用yuanlam用户登录）
+#### 1.下载最新版本
+```
+wget https://github.com/Dreamacro/clash/releases/download/v0.18.0/clash-linux-amd64-v0.18.0.gz
+```
+#### 2.解压
+```
+gzip -d clash-linux-amd64-v0.18.0.gz
+```
+#### 3.移动至usr/bin/clash并重命名为clash
+```
+sudo mv clash-linux-amd64-v0.18.0 /usr/bin/clash      #普通用户首次使用sudo需要输入密码，输入正确没有任何反馈
+```
+#### 4.赋予clash运行权限
+```
+sudo chmod +x /usr/bin/clash
+```
+#### 5.检查是否安装成功
+```
+clash -v      #如返回（Clash v0.18.0 linux amd64 Fri Feb 21 12:42:08 UTC 2020）即成功
+```
+#### 6.为 clash 添加绑定低位端口的权限，这样运行clash的时候无需root权限
+```
+sudo setcap cap_net_bind_service=+ep /usr/bin/clash
+```
+## 四.创建配置文件及安装控制面板（使用yuanlam用户登录）
+#### 1.创建配置文件目录
+```
+mkdir -p ~/.config/clash
+```
+#### 2.进入目录
+```
+cd ~/.config/clash
+```
+#### 3.创建配置文件
+```
+touch config.yaml
+```
+#### 4.手动编辑很麻烦，可用winscp上传到/home/用户名/.config/clash (需打开隐藏文件），然后再用命令确认
+```
+nano config.yaml
+```
+#### 5.下载前端代码压缩包
+```
+wget https://github.com/haishanh/yacd/archive/gh-pages.zip
+```
+#### 6.解压
+```
+unzip gh-pages.zip
+```
+#### 7.把目录名改成 dashboard
+```
+mv yacd-gh-pages/ dashboard/
 ```
