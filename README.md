@@ -283,3 +283,84 @@ sudo systemctl status clash.service
 ## 实时滚动状态 ##
 sudo journalctl -u clash.service -f
 ```
+## 六.配置防火墙转发规则（使用root用户登录）
+*这个步骤是踩坑最深的地方，网上看了很多教程，然后反复尝试，一直失败，最后才成功，到现在我都不明白究竟怎么回事，还在学习中，反正用下面的方法能成功*
+#### 1.创建转发规则
+创建sh文件
+```
+nano ip.sh
+```
+输入以下内容（10.10.10.97:53为旁路由IP与Clash的DNS监听端口，7892为Clash的redir-port，根据实际情况修改）
+```
+#!/bin/bash
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+
+iptables -t nat -N clash
+iptables -t nat -N clash_dns
+
+iptables -t nat -A PREROUTING -p tcp --dport 53 -d 198.18.0.0/24 -j clash_dns
+iptables -t nat -A PREROUTING -p udp --dport 53 -d 198.18.0.0/24 -j clash_dns
+iptables -t nat -A PREROUTING -p tcp -j clash
+
+iptables -t nat -A clash_dns -p udp --dport 53 -d 198.18.0.0/24 -j DNAT --to-destination 10.10.10.97:53
+iptables -t nat -A clash_dns -p tcp --dport 53 -d 198.18.0.0/24 -j DNAT --to-destination 10.10.10.97:53
+
+iptables -t nat -A clash -d 1.0.0.0/8 -j ACCEPT
+iptables -t nat -A clash -d 10.0.0.0/8 -j ACCEPT
+iptables -t nat -A clash -d 100.64.0.0/10 -j ACCEPT
+iptables -t nat -A clash -d 127.0.0.0/8 -j ACCEPT
+iptables -t nat -A clash -d 169.254.0.0/16 -j ACCEPT
+iptables -t nat -A clash -d 172.16.0.0/12 -j ACCEPT
+iptables -t nat -A clash -d 192.168.0.0/16 -j ACCEPT
+iptables -t nat -A clash -d 224.0.0.0/4 -j ACCEPT
+iptables -t nat -A clash -d 240.0.0.0/4 -j ACCEPT
+iptables -t nat -A clash -d 192.168.1.2/32 -j ACCEPT
+
+iptables -t nat -A clash -p tcp --dport 22 -d 10.10.10.97/32 -j ACCEPT
+
+iptables -t nat -A clash -p tcp -j REDIRECT --to-ports 7892
+```
+赋予执行权限
+```
+chmod +x ip.sh
+```
+执行(如没错误，应该没返回任何东西)
+```
+bash ip.sh
+```
+#### 2.利用ipupdown保存规则
+*此处感谢TG墙洞群的大佬 风蚀残叶 | 御伽話の夢 定めった夢 @wzw1997007 的耐心教导*
+保存规则
+```
+udo iptables-save > /etc/iptables.rules
+```
+创建ifup
+```
+sudo nano /etc/network/if-pre-up.d/iptables
+```
+填入以下内容并保存退出
+```
+#!/bin/bash
+iptables-restore < /etc/iptables.rules
+```
+赋予执行权限
+```
+sudo chmod a+x /etc/network/if-pre-up.d/iptables
+```
+创建ifdown
+```
+sudo nano /etc/network/if-post-down.d/iptables
+```
+填入以下内容并保存退出
+```
+#!/bin/bash
+iptables-save > /etc/iptables.rules
+```
+赋予执行权限
+```
+sudo chmod a+x /etc/network/if-post-down.d/iptables
+```
+```
+sudo systemctl start clash.service
+```
