@@ -164,3 +164,17 @@ sudo nano /etc/systemd/resolved.conf
 DNSStubListener=no
 ```
 保存退出
+###### 7.创建非root用户，用于安装运行Clash
+创建新用户
+*此处如果是用IOS镜像安装，可以跳过*
+```
+sudo adduser yuanlam      #根据提示输入密码，其他保持默认
+```
+将新用户添加到 sudo 组
+```
+usermod -aG sudo yuanlam
+```
+重启系统
+```
+reboot
+```
