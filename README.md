@@ -196,15 +196,15 @@ reboot
 ## 三.安装Clash（使用yuanlam用户登录）
 #### 1.下载最新版本
 ```
-wget https://github.com/Dreamacro/clash/releases/download/v0.18.0/clash-linux-amd64-v0.18.0.gz
+wget https://github.com/Dreamacro/clash/releases/download/v0.19.0/clash-linux-amd64-v0.19.0.gz
 ```
 #### 2.解压
 ```
-gzip -d clash-linux-amd64-v0.18.0.gz
+gzip -d clash-linux-amd64-v0.19.0.gz
 ```
 #### 3.移动至usr/bin/clash并重命名为clash
 ```
-sudo mv clash-linux-amd64-v0.18.0 /usr/bin/clash      #普通用户首次使用sudo需要输入密码，输入正确没有任何反馈
+sudo mv clash-linux-amd64-v0.19.0 /usr/bin/clash      #普通用户首次使用sudo需要输入密码，输入正确没有任何反馈
 ```
 #### 4.赋予clash运行权限
 ```
