@@ -598,7 +598,7 @@ bash ip.sh
 *此处感谢TG墙洞群的大佬 风蚀残叶 | 御伽話の夢 定めった夢 @wzw1997007 的耐心教导*
 保存规则
 ```
-udo iptables-save > /etc/iptables.rules
+sudo iptables-save > /etc/iptables.rules
 ```
 创建ifup
 ```
