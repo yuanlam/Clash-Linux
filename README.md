@@ -44,6 +44,19 @@ mss 1452                       #MSS
 ```
 /etc/init.d/networking restart
 ```
+#### 4.允许root用户ssh连接
+打开文件
+```
+nano /etc/ssh/sshd_config
+```
+取消注释，修改
+```
+PermitRootLogin yes
+```
+重启服务
+```
+service sshd restart
+```
 #### 4.重启系统
 ```
 reboot
