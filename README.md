@@ -505,7 +505,7 @@ sudo touch /etc/systemd/system/clash.service
 #### 2.编辑service文件
 打开service文件
 ```
-sudo touch /etc/systemd/system/clash.service
+sudo nano /etc/systemd/system/clash.service
 ```
 填入以下内容
 ```
